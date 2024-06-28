@@ -2,3 +2,4 @@ sentence-transformers
 streamlit
 transformers
 torch
+transformers[torch]
