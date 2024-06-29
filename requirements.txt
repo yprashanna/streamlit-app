@@ -1,4 +1,5 @@
 sentence-transformers
 streamlit
-torch
 transformers
+torch
+datasets
