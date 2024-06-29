@@ -30,9 +30,6 @@ def find_answer(question):
                     questions.append(item['question'])
                     answers.append(item['answer'])
 
-    if not questions:
-        return "Sorry, I don't have enough data to answer that question."
-
     # Encode the question and the list of questions
     question_embedding = model.encode(question, convert_to_tensor=True)
     questions_embeddings = model.encode(questions, convert_to_tensor=True)
@@ -42,10 +39,6 @@ def find_answer(question):
 
     # Find the index of the highest score
     best_index = cosine_scores.argmax()
-    best_score = cosine_scores[0][best_index].item()
-
-    if best_score < 0.5:  # Threshold can be adjusted
-        return "Sorry, I couldn't find a relevant answer."
 
     return answers[best_index]
 
