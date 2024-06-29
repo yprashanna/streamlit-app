@@ -9,12 +9,18 @@ with open('scholarships.json', 'r') as f:
 
 # Prepare training examples
 train_examples = []
-for key in ['NIT_admissions', 'IIT_admissions', 'political_power', 'education_consultancy', 'college_contact']:
-    for item in data[key]:
-        train_examples.append(InputExample(texts=[item['question'], item['answer']]))
+required_keys = ['NIT_admissions', 'IIT_admissions', 'political_power', 'education_consultancy', 'college_contact']
+
+for key in required_keys:
+    if key in data:
+        for item in data[key]:
+            train_examples.append(InputExample(texts=[item['question'], item['answer']]))
+    else:
+        print(f"Warning: Key '{key}' not found in the JSON file")
 
 # Adding the scheme description to the training examples
-train_examples.append(InputExample(texts=["What is COMPEX Scholarship?", data["description"]]))
+if 'description' in data:
+    train_examples.append(InputExample(texts=["What is COMPEX Scholarship?", data["description"]]))
 
 # Load the model
 model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
